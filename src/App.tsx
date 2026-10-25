@@ -36,13 +36,13 @@ export default function App() {
     ])
       setMeta(sel, 'content', description)
     if (routeDoc) {
-      const url = `https://loki.ridgeaire.workers.dev${routeDoc.path}`
+      const url = `https://beta.tryloki.workers.dev${routeDoc.path}`
       document.head
         .querySelector('link[rel="canonical"]')
         ?.setAttribute('href', url)
       setMeta('meta[property="og:url"]', 'content', url)
     } else {
-      const url = 'https://loki.ridgeaire.workers.dev/'
+      const url = 'https://beta.tryloki.workers.dev/'
       document.head
         .querySelector('link[rel="canonical"]')
         ?.setAttribute('href', url)

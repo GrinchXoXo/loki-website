@@ -2,7 +2,7 @@
   // Cloudflare Workers (free plan): serves the built site from ./dist.
   // Deploy with: npm run deploy   (first time: npx wrangler@4 login)
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "loki",
+  "name": "beta",
   "compatibility_date": "2025-10-01",
   "assets": {
     "directory": "./dist",

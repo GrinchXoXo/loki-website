@@ -11,14 +11,20 @@ import { Chip, Reveal, Section, Words } from '@/components/ui'
 const W = 600
 const H = 320
 
+/** Tight content bounds (inside the 600×320 canvas) so small screens can scale cleanly. */
+type FitBounds = { x: number; y: number; w: number; h: number }
+
 /** Renders a fixed-size diagram scaled down to fit its container. */
-function Fit({ children, height }: { children: ReactNode; height: number }) {
+function Fit({ children, height, bounds }: { children: ReactNode; height: number; bounds?: FitBounds }) {
   const [ref, width] = useWidth<HTMLDivElement>()
-  const scale = width ? Math.min(1, (width - 16) / W, height / H) : 1
+  const b = bounds ?? { x: 0, y: 0, w: W, h: H }
+  const scale = width ? Math.min(1, (width - 16) / b.w, height / b.h) : 1
   return (
     <div ref={ref} className="relative flex w-full items-center justify-center overflow-hidden" style={{ height }}>
-      <div className="relative shrink-0" style={{ width: W, height: H, transform: `scale(${scale})` }}>
-        {children}
+      <div className="relative shrink-0 overflow-hidden" style={{ width: b.w, height: b.h, transform: `scale(${scale})` }}>
+        <div className="absolute" style={{ left: -b.x, top: -b.y, width: W, height: H }}>
+          {children}
+        </div>
       </div>
     </div>
   )
@@ -501,18 +507,21 @@ const views: Array<{
   title?: string
   caption: string
   View: (p: { play: boolean }) => ReactNode
+  fit?: FitBounds
 }> = [
   {
     label: 'Voice conversion',
     icon: 'asterisk',
     caption: "Transform captured speech into a different voice output using Loki's voice-conversion engine.",
     View: RoutingView,
+    fit: { x: 18, y: 40, w: 526, h: 244 },
   },
   {
     label: 'Voice notes',
     icon: 'chat',
     caption: 'Send transformed voice notes on WhatsApp and Telegram, recorded and converted right on your phone.',
     View: TracingView,
+    fit: { x: 104, y: 44, w: 392, h: 202 },
   },
   {
     label: 'Live calls',
@@ -520,6 +529,7 @@ const views: Array<{
     caption:
       'Transform your voice in real time during WhatsApp and Telegram calls. A one-time setup with Shizuku gets your phone ready.',
     View: CostView,
+    fit: { x: 144, y: 34, w: 312, h: 200 },
   },
   {
     label: 'Audio pipeline',
@@ -528,6 +538,7 @@ const views: Array<{
     caption:
       'Loki connects audio capture, conversion, and output, so the transformation is part of the conversation rather than a separate editing routine.',
     View: SecureView,
+    fit: { x: 134, y: 0, w: 332, h: 278 },
   },
   {
     label: 'Compatibility',
@@ -536,6 +547,7 @@ const views: Array<{
     caption:
       'Loki checks your messaging app, Android version, permissions, and audio routing, and tells you exactly what to change. Live calls need Android 13 or newer.',
     View: ModelView,
+    fit: { x: 136, y: 0, w: 376, h: 268 },
   },
   {
     label: 'Availability',
@@ -544,6 +556,7 @@ const views: Array<{
     caption:
       'Download Loki, create your account in the app, and start with 30 free minutes of voice conversion every month.',
     View: HostView,
+    fit: { x: 112, y: 0, w: 376, h: 282 },
   },
 ]
 
@@ -659,7 +672,7 @@ function MobileCarousel() {
               <h3 className="text-[20px] font-medium tracking-[-0.02em]">{v.label}</h3>
             </header>
             <div className="dots-bg border-b border-line">
-              <Fit height={240}>
+              <Fit height={240} bounds={v.fit}>
                 <v.View play={onScreen && i === active} />
               </Fit>
             </div>

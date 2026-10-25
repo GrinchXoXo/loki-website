@@ -44,7 +44,7 @@ export function Hero() {
               </PixelButton>
               <ArrowLink href="#how">How it works</ArrowLink>
             </div>
-            <p className="flex flex-col gap-1 font-mono text-[14px] tracking-[0.02em] text-muted">
+            <p className="hidden flex-col gap-1 font-mono text-[14px] tracking-[0.02em] text-muted sm:flex">
               <span className="label text-ink">Loki voice engine</span>
               <span>Input → Voice conversion → Output</span>
             </p>
@@ -261,7 +261,7 @@ export function HeroGrid() {
           )}
           <span className="label absolute bottom-3 left-4 z-10 text-[10px] text-muted md:left-5">Loki · Voice engine</span>
 
-          <Histogram width={width} rows={2} cell={cell} play={inView} pixel={mobile ? 6 : 8} />
+          <Histogram width={width} rows={mobile ? 1 : 2} cell={cell} play={inView} pixel={mobile ? 6 : 8} />
         </div>
       </div>
     </section>

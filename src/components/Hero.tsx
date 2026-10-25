@@ -160,7 +160,10 @@ export function HeroGrid() {
   }
 
   return (
-    <section aria-label="Illustration of the voice transformation pipeline" className="relative border-t border-line">
+    <section
+      aria-label="Illustration of the voice transformation pipeline"
+      className="relative border-t border-line max-[699px]:hidden"
+    >
       <div className="frame border-x border-line">
         <span className="label pointer-events-none absolute top-6 left-4 z-20 text-muted md:left-6 xl:top-8 xl:left-[calc(32px-var(--rail))]">
           <Scramble text="03" />

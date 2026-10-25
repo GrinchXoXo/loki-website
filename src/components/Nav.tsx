@@ -97,7 +97,6 @@ export function Nav() {
         <div className="flex h-full items-center justify-between px-4 md:px-8">
           <Logo />
           <div className="flex items-center gap-2">
-            <OutlineButton>Get Loki</OutlineButton>
             <button
               type="button"
               aria-label={open ? 'Close menu' : 'Open menu'}

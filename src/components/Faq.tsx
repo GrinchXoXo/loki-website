@@ -4,6 +4,7 @@ import { useInView, useReducedMotion } from '@/lib/motion'
 import { Pixel } from '@/components/pixel'
 import { ArrowLink, Chip, PixelButton, Reveal, Scramble, Section, Words } from '@/components/ui'
 import { LINKS, externalProps } from '@/lib/links'
+import { FREE_MINUTES, FREE_RULE } from '@/lib/plans'
 
 /* ------------------------------------------------------------------ */
 /* 13 — FAQ                                                            */
@@ -28,7 +29,7 @@ const faqs = [
   },
   {
     q: 'Is Loki available to everyone?',
-    a: 'Yes. Anyone with an Android phone can download Loki, and every account gets 30 free minutes of voice conversion each month.',
+    a: `Yes. Anyone with an Android phone can download Loki. New accounts get ${FREE_MINUTES} free minutes, ${FREE_RULE}.`,
   },
   {
     q: 'Can I use Loki to sound like a specific person?',
@@ -195,7 +196,7 @@ export function Cta() {
           </Words>
           <Reveal as="p" delay={250} className="mt-8 max-w-[520px] text-[16px] leading-[1.5] text-muted-3">
             Keep your real voice private, give your content a new character, or just have fun on the next call.
-            Start free with 30 minutes every month.
+            Start free with {FREE_MINUTES} minutes on your phone.
           </Reveal>
           <Reveal delay={350} className="mt-10 flex flex-col items-start gap-7 sm:flex-row sm:items-center sm:gap-8">
             <PixelButton variant="light" href={LINKS.download}>

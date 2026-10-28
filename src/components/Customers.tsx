@@ -4,6 +4,7 @@ import { useOnScreen, useReducedMotion, useScramble } from '@/lib/motion'
 import { Pixel, type IconName } from '@/components/pixel'
 import { ArrowLink, Chip, CornerDots, PixelButton, Reveal, Section, Words } from '@/components/ui'
 import { LINKS } from '@/lib/links'
+import { FREE_MINUTES, FREE_RULE, formatHours, formatNaira, PLANS } from '@/lib/plans'
 
 /* ------------------------------------------------------------------ */
 /* 11 — Community                                                       */
@@ -183,49 +184,6 @@ export function Customers() {
 /* 12 — Availability / access                                          */
 /* ------------------------------------------------------------------ */
 
-type Path = {
-  id: 'notes' | 'calls' | 'future'
-  name: string
-  desc: string
-  status: string
-  tag?: string
-  cta: string
-  href: string
-  features: string[]
-}
-
-const paths: Path[] = [
-  {
-    id: 'notes',
-    name: 'Voice notes',
-    desc: 'Send voice notes in a different voice on WhatsApp and Telegram.',
-    status: 'Available now',
-    tag: 'Start here',
-    cta: 'Download Loki',
-    href: LINKS.download,
-    features: ['Voice conversion', 'WhatsApp voice notes', 'Telegram voice notes'],
-  },
-  {
-    id: 'calls',
-    name: 'Live calls',
-    desc: 'Talk in your new voice on WhatsApp and Telegram calls, in real time.',
-    status: 'Real-time',
-    tag: 'One-time setup',
-    cta: 'View setup requirements',
-    href: '#faq',
-    features: ['One-time Shizuku setup', 'Android 13 or newer', 'Readiness check before you call'],
-  },
-  {
-    id: 'future',
-    name: 'Updates',
-    desc: 'Follow Loki for new releases, new features, and help when you need it.',
-    status: 'Always improving',
-    cta: 'Follow Loki',
-    href: LINKS.channel,
-    features: ['Release announcements', 'New features first', 'Help and support'],
-  },
-]
-
 function Status({ text }: { text: string }) {
   const out = useScramble(text, true, 520)
   return (
@@ -236,63 +194,29 @@ function Status({ text }: { text: string }) {
   )
 }
 
-function PathToggle({ value, onChange }: { value: Path['id']; onChange: (v: Path['id']) => void }) {
-  const opts: Array<{ id: Path['id']; label: string; tag?: string }> = [
-    { id: 'notes', label: 'Voice notes' },
-    { id: 'calls', label: 'Live calls', tag: 'Real-time' },
-  ]
-  return (
-    <div className="inline-flex border border-line-2 bg-white/50 p-[3px]" role="radiogroup" aria-label="Choose a path">
-      {opts.map((o) => {
-        const on = value === o.id
-        return (
-          <button
-            key={o.id}
-            type="button"
-            role="radio"
-            aria-checked={on}
-            onClick={() => onChange(o.id)}
-            className={cn(
-              'flex h-10 items-center gap-2 border px-3.5 text-[14px] transition-colors duration-300',
-              on ? 'border-accent bg-white text-ink' : 'border-transparent text-muted hover:text-ink',
-            )}
-          >
-            {on && <span className="size-[6px] bg-accent" />}
-            {o.label}
-            {o.tag && <span className="label bg-accent px-1.5 py-1 text-[10px] text-white">{o.tag}</span>}
-          </button>
-        )
-      })}
-    </div>
-  )
-}
-
 export function Pricing() {
-  const [selected, setSelected] = useState<Path['id']>('notes')
   return (
     <Section n="12" id="availability">
       <div className="pt-10 pb-16 md:pt-20 md:pb-20 xl:pt-[132px] xl:pb-[132px]">
         <div className="flex flex-col gap-8 px-4 md:px-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <Reveal>
-              <Chip>Access</Chip>
+              <Chip>Pricing</Chip>
             </Reveal>
-            <Words className="display mt-6 text-[38px] md:text-[48px] xl:text-[56px]">Start with 30 free minutes.</Words>
+            <Words className="display mt-6 text-[38px] md:text-[48px] xl:text-[56px]">Pay only for the time you use.</Words>
             <Reveal as="p" delay={150} className="mt-5 max-w-[600px] text-[16px] leading-[1.5] text-muted">
-              Every Loki account gets 30 free minutes of voice conversion each month. Use them for voice notes, live
-              calls, or both.
+              Every new account gets {FREE_MINUTES} free minutes ({FREE_RULE}). When you need more, buy a pack. No
+              subscription, and nothing is charged automatically.
             </Reveal>
           </div>
-          <Reveal delay={150} className="shrink-0">
-            <PathToggle value={selected} onChange={setSelected} />
-          </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-6 border-line px-4 md:px-6 lg:mt-16 lg:grid-cols-3 lg:gap-0 lg:border-t lg:px-0">
-          {paths.map((p, i) => {
-            const featured = p.id === selected
+        <div className="mt-12 grid grid-cols-1 gap-6 border-line px-4 md:grid-cols-2 md:px-6 lg:mt-16 lg:grid-cols-4 lg:gap-0 lg:border-t lg:px-0">
+          {PLANS.map((plan, i) => {
+            const featured = 'badge' in plan
+            const price = formatNaira(plan.price)
             return (
-              <Reveal key={p.id} delay={i * 100} className="relative">
+              <Reveal key={plan.id} delay={i * 100} className="relative">
                 <div
                   className={cn(
                     'h-full transition-[margin,padding,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
@@ -306,45 +230,46 @@ export function Pricing() {
                     )}
                   >
                     {featured && <CornerDots />}
-                    <PathBody path={p} featured={featured} />
+                    <PlanBody plan={plan} price={price} featured={featured} />
                   </div>
                 </div>
               </Reveal>
             )
           })}
         </div>
+        <p className="mt-5 px-4 text-[12px] text-muted md:px-6 lg:px-0">Pay inside the app with your card or bank transfer. Prices are in naira.</p>
       </div>
     </Section>
   )
 }
 
-function PathBody({ path, featured }: { path: Path; featured: boolean }) {
+function PlanBody({ plan, price, featured }: { plan: (typeof PLANS)[number]; price: string; featured: boolean }) {
+  const perMinute = formatNaira(Math.round(plan.price / plan.minutes))
   return (
     <div className={cn('flex h-full flex-col px-6 pb-8', featured ? 'pt-5' : 'pt-6 lg:pt-12')}>
-      {featured && path.tag && (
+      {featured && plan.badge && (
         <div className="mb-6 flex items-center gap-3">
-          <span className="label text-[10px] text-ink">{path.tag}</span>
+          <span className="label text-[10px] text-ink">{plan.badge}</span>
           <span className="h-px flex-1 bg-line" />
         </div>
       )}
       <h3 className="flex items-center gap-2.5 text-[24px] font-medium tracking-[-0.02em]">
         {featured && <Pixel name="asterisk" size={3} className="text-accent" />}
-        {path.name}
+        {plan.name}
       </h3>
-      <p className="mt-3 min-h-[42px] max-w-[280px] text-[14px] leading-[1.5] text-muted">{path.desc}</p>
       <div className="mt-8">
-        <Status key={path.status} text={path.status} />
+        <Status key={price} text={price} />
       </div>
-      <span className="label mt-3 text-[10px] text-muted">Availability</span>
+      <p className="label mt-3 text-[10px] text-muted">{formatHours(plan.minutes)} · {perMinute} per minute</p>
       <div className="mt-8">
-        <PixelButton block variant={featured ? 'accent' : 'dark'} href={path.href}>
-          {path.cta}
+        <PixelButton block variant={featured ? 'accent' : 'dark'} href={LINKS.download}>
+          Download Loki
         </PixelButton>
       </div>
       <div className="mt-8 border-t border-line pt-8">
         <p className="text-[14px] text-muted">Includes:</p>
         <ul className="mt-5 space-y-3">
-          {path.features.map((f) => (
+          {[`${formatHours(plan.minutes)} of voice changing`, 'WhatsApp and Telegram, calls and voice notes', `Use within ${plan.days} days`].map((f) => (
             <li key={f} className="flex items-center gap-3 text-[14px] text-ink">
               <Pixel name="check" size={2} className={featured ? 'text-accent' : 'text-ink'} />
               {f}

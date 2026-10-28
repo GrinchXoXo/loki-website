@@ -3,6 +3,7 @@
  * Plain data so the wording can be edited without touching layout code.
  */
 import { LEGAL_NAME, SUPPORT_EMAIL } from '@/lib/links'
+import { FREE_MINUTES, FREE_RULE } from '@/lib/plans'
 
 export type DocBlock = string | { list: string[] } | { steps: string[] } | { note: string }
 
@@ -172,8 +173,8 @@ export const TERMS: Doc = {
       id: 'plans',
       title: 'Free minutes and plans',
       body: [
-        'Every account gets 30 free minutes of voice conversion each month. Unused free minutes do not carry over.',
-        'Paid plans are one-off purchases that add conversion minutes for 30 days. Buying the same plan again extends it. Prices are shown in the app before you pay. Plans do not renew automatically.',
+        `New accounts get ${FREE_MINUTES} free minutes, ${FREE_RULE}. Free minutes can't be moved to another account.`,
+        'Packs are one-off purchases. Each pack must be used within its number of days (30 to 90). Buying another pack adds its minutes. Nothing renews automatically.',
         'Payments are processed by our payment provider, whose terms also apply.',
       ],
     },
@@ -256,7 +257,7 @@ export const SETUP: Doc = {
       id: 'account',
       title: 'Create your account',
       body: [
-        'Sign up with your email or with Google. Your 30 free minutes for the month are added straight away.',
+        `Sign up with your email or with Google. Your ${FREE_MINUTES} free minutes are added straight away, ${FREE_RULE}.`,
       ],
     },
     {

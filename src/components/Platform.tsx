@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 import { mulberry32, useInterval, useOnScreen, useRaf, useReducedMotion, useScramble, useWidth } from '@/lib/motion'
 import { Pixel, type IconName } from '@/components/pixel'
 import { Chip, Reveal, Section, Words } from '@/components/ui'
+import { FREE_MINUTES } from '@/lib/plans'
 
 /* ------------------------------------------------------------------ */
 /* Shared bits                                                         */
@@ -554,7 +555,7 @@ const views: Array<{
     icon: 'grid',
     title: 'Ready on Android.',
     caption:
-      'Download Loki, create your account in the app, and start with 30 free minutes of voice conversion every month.',
+      `Download Loki, create your account in the app, and start with ${FREE_MINUTES} free minutes on your phone.`,
     View: HostView,
     fit: { x: 112, y: 0, w: 376, h: 282 },
   },

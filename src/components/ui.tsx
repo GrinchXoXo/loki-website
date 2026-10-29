@@ -53,6 +53,9 @@ export function Section({
 }
 
 export function SectionNumber({ n, dark, className }: { n: string; dark?: boolean; className?: string }) {
+  const num = parseInt(n, 10)
+  // the voice-pipeline graphic (03) is hidden below 700px, so later sections shift down one there
+  const shifted = num >= 4 ? String(num - 1) : n
   return (
     <span
       aria-hidden="true"
@@ -62,7 +65,18 @@ export function SectionNumber({ n, dark, className }: { n: string; dark?: boolea
         className,
       )}
     >
-      <Scramble text={n} />
+      {num >= 4 ? (
+        <>
+          <span className="hidden min-[700px]:inline">
+            <Scramble text={n} />
+          </span>
+          <span className="inline min-[700px]:hidden">
+            <Scramble text={shifted} />
+          </span>
+        </>
+      ) : (
+        <Scramble text={n} />
+      )}
     </span>
   )
 }
@@ -386,7 +400,7 @@ export function PixelButton({
       onFocus={() => setHover(true)}
       onBlur={() => setHover(false)}
       className={cn(
-        'relative inline-flex h-14 items-center overflow-hidden px-6 text-[16px] leading-none font-medium whitespace-nowrap select-none',
+        'relative inline-flex h-14 items-center overflow-hidden px-4 text-[15px] leading-none font-medium whitespace-nowrap select-none min-[420px]:px-6 min-[420px]:text-[16px]',
         block && 'flex w-full',
         className,
       )}
@@ -398,7 +412,7 @@ export function PixelButton({
       }}
     >
       <canvas ref={canvasRef} aria-hidden="true" className="pointer-events-none absolute inset-0 size-full" />
-      <span className={cn('relative flex items-center gap-3', block && 'w-full')}>
+      <span className={cn('relative flex items-center gap-2 min-[420px]:gap-3', block && 'w-full')}>
         <span style={{ color: lit ? base.glyphHover : base.glyph, transition: 'color 160ms 80ms' }}>
           <Pixel name={icon} size={3} />
         </span>

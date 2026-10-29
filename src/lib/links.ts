@@ -44,7 +44,7 @@ export const LINKS = {
 }
 
 /** Settings used by the partner dashboard. */
-export const LOKI_API_URL = lokiApiUrl || 'https://api.3-252-253-247.sslip.io'
+export const LOKI_API_URL = lokiApiUrl || 'https://lokiapi.duckdns.org'
 export const PARTNER_FIREBASE_CONFIG = {
   apiKey: firebaseApiKey,
   authDomain: firebaseAuthDomain,

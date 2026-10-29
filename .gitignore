@@ -37,3 +37,13 @@ _backup_*.tgz
 *.njsproj
 *.sln
 *.sw?
+# Secrets and generated/local artifacts
+.env.*
+!.env.example
+node_modules/
+dist/
+.wrangler/
+_backup*/
+*.tgz
+_to_delete/
+.env.bak*

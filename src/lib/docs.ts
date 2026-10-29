@@ -3,7 +3,7 @@
  * Plain data so the wording can be edited without touching layout code.
  */
 import { LEGAL_NAME, SUPPORT_EMAIL } from '@/lib/links'
-import { FREE_MINUTES, FREE_RULE } from '@/lib/plans'
+import { FREE_MINUTES } from '@/lib/plans'
 
 export type DocBlock = string | { list: string[] } | { steps: string[] } | { note: string }
 
@@ -173,8 +173,9 @@ export const TERMS: Doc = {
       id: 'plans',
       title: 'Free minutes and plans',
       body: [
-        `New accounts get ${FREE_MINUTES} free minutes, ${FREE_RULE}. Free minutes can't be moved to another account.`,
-        'Packs are one-off purchases. Each pack must be used within its number of days (30 to 90). Buying another pack adds its minutes. Nothing renews automatically.',
+        `Each phone gets ${FREE_MINUTES} free minutes once, when the first account is created on it.`,
+        'Paid minutes come in one-off packs: Starter 60 min ₦15,000 (30 days), Plus 180 min ₦40,000 (45 days), Pro 360 min ₦70,000 (60 days), and Max 720 min ₦120,000 (90 days).',
+        'Each pack’s minutes expire at the end of its own validity period. Buying again adds a new pack. Minutes that expire soonest are used first. Packs never renew automatically.',
         'Payments are processed by our payment provider, whose terms also apply.',
       ],
     },
@@ -257,7 +258,7 @@ export const SETUP: Doc = {
       id: 'account',
       title: 'Create your account',
       body: [
-        `Sign up with your email or with Google. Your ${FREE_MINUTES} free minutes are added straight away, ${FREE_RULE}.`,
+        'You get 10 free minutes to try Loki (once per phone).',
       ],
     },
     {
@@ -338,7 +339,77 @@ export const SETUP: Doc = {
   ],
 }
 
-export const DOCS = [PRIVACY, TERMS, SETUP]
+export const PARTNERS: Doc = {
+  path: '/partners',
+  chip: 'Partners',
+  title: 'Earn with Loki',
+  intro: 'Share Loki with people you know. Earn when they buy minutes.',
+  sections: [
+    {
+      id: 'how-it-works',
+      title: 'How it works',
+      body: [{
+        steps: [
+          'Apply to become a partner and get your code.',
+          'Share your code with friends.',
+          'When they buy minutes during their first 6 months, you earn 20% of what Loki receives.',
+          'We confirm earnings after 14 days and pay partners monthly to their bank.',
+        ],
+      }],
+    },
+    {
+      id: 'friends',
+      title: 'What your friends get',
+      body: ['When someone signs up with your code, they get 10 extra free minutes.'],
+    },
+    {
+      id: 'rules',
+      title: 'Programme rules',
+      body: [
+        {
+          list: [
+            'This is a one-level programme. You earn from people you invite, not from people they invite.',
+            'Do not create fake accounts or use your own code.',
+            'Do not promote Loki by pretending to be someone else or by running a scam. We may end the partnership and cancel unpaid earnings if this happens.',
+            'Payouts start at ₦5,000. Earnings are confirmed 14 days after a purchase. Refunded purchases are removed from your earnings.',
+          ],
+        },
+        'Read the full rules in the partner terms.',
+      ],
+    },
+  ],
+}
+
+export const PARTNER_TERMS: Doc = {
+  path: '/partner-terms',
+  chip: 'Partner terms',
+  title: 'Loki partner terms',
+  intro: 'These rules explain how partner codes, earnings and payouts work.',
+  updated: UPDATED,
+  sections: [
+    {
+      id: 'commission',
+      title: 'Earnings',
+      body: ['You earn 20% of the net amount Loki receives from a referred user’s minute-pack purchase. This applies to that user’s purchases for 6 months from their referral date. You only earn from people you invite directly. This is a one-level programme.'],
+    },
+    {
+      id: 'hold',
+      title: 'Confirmation and refunds',
+      body: ['Each commission is held for 14 days after the purchase. A refunded or reversed purchase is removed from earnings. If its commission was already paid, the amount may be deducted from a later payout.'],
+    },
+    {
+      id: 'payouts',
+      title: 'Payouts',
+      body: ['Payouts are made monthly to your bank account when your payable balance is at least ₦5,000. We collect your payout details through the partner form. Keep those details correct and up to date.'],
+    },
+    {
+      id: 'promotion',
+      title: 'Fair promotion',
+      body: ['Do not use your own code, create fake accounts, pretend to be another person, or use scams to promote Loki. We may cancel unpaid earnings and end a partnership for abuse. Loki may change rates with notice or end the programme.'],
+    },
+  ],
+}
+export const DOCS = [PRIVACY, TERMS, SETUP, PARTNER_TERMS]
 
 /** The doc for the current URL path, or null for the home page. */
 export function docForPath(pathname: string): Doc | null {

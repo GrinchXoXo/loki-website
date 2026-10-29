@@ -11,6 +11,12 @@ interface ImportMetaEnv {
   readonly VITE_LOKI_PRIVACY_URL?: string
   readonly VITE_LOKI_TERMS_URL?: string
   readonly VITE_LOKI_LEGAL_NAME?: string
+  readonly VITE_LOKI_API_URL?: string
+  readonly VITE_FIREBASE_API_KEY?: string
+  readonly VITE_FIREBASE_AUTH_DOMAIN?: string
+  readonly VITE_FIREBASE_PROJECT_ID?: string
+  readonly VITE_FIREBASE_APP_ID?: string
+  readonly VITE_LOKI_PARTNER_FORM_URL?: string
 }
 
 interface ImportMeta {

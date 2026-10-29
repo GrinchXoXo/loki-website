@@ -10,6 +10,8 @@ import { Customers, Pricing } from '@/components/Customers'
 import { Cta, Faq, Footer } from '@/components/Faq'
 import { DocPage } from '@/components/DocPage'
 import { docForPath } from '@/lib/docs'
+import { PartnersPage } from '@/components/PartnersPage'
+import { PartnerDashboard } from '@/components/PartnerDashboard'
 
 const HOME_TITLE = 'Loki — Your voice. A different sound.'
 const HOME_DESCRIPTION =
@@ -22,10 +24,25 @@ function setMeta(selector: string, attr: string, content: string) {
 
 export default function App() {
   // Per-route SEO: title, description and social tags follow the current page.
-  const routeDoc = docForPath(window.location.pathname)
+  const path = window.location.pathname.replace(/\/+$/, '') || '/'
+  const routeDoc = docForPath(path)
+  const partnersPage = path === '/partners'
+  const partnerDashboard = path === '/partner'
   useEffect(() => {
-    const title = routeDoc ? `${routeDoc.title} — Loki` : HOME_TITLE
-    const description = routeDoc?.intro ?? HOME_DESCRIPTION
+    const title = routeDoc
+      ? `${routeDoc.title} — Loki`
+      : partnersPage
+        ? 'Earn with Loki — Loki'
+        : partnerDashboard
+          ? 'Partner sign-in — Loki'
+          : HOME_TITLE
+    const description = routeDoc?.intro ?? (
+      partnersPage
+        ? 'Share Loki with friends and earn from the minutes they buy.'
+        : partnerDashboard
+          ? 'Sign in to view your Loki partner code and earnings.'
+          : HOME_DESCRIPTION
+    )
     document.title = title
     setMeta('meta[name="description"]', 'content', description)
     for (const sel of ['meta[property="og:title"]', 'meta[name="twitter:title"]'])
@@ -48,9 +65,19 @@ export default function App() {
         ?.setAttribute('href', url)
       setMeta('meta[property="og:url"]', 'content', url)
     }
-  }, [routeDoc])
+  }, [routeDoc, partnersPage, partnerDashboard])
 
-  // /privacy, /terms and /setup reuse the site frame: nav, page body, footer.
+  if (partnersPage || partnerDashboard) {
+    return (
+      <div className="min-h-screen bg-paper pt-16 text-ink xl:pt-0">
+        <Nav />
+        <main>{partnersPage ? <PartnersPage /> : <PartnerDashboard />}</main>
+        <Footer />
+      </div>
+    )
+  }
+
+  // Legal and guide pages reuse the site frame: nav, page body, footer.
   if (routeDoc) {
     return (
       <div className="min-h-screen bg-paper pt-16 text-ink xl:pt-0">

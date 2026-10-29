@@ -4,7 +4,7 @@ import { useOnScreen, useReducedMotion, useScramble } from '@/lib/motion'
 import { Pixel, type IconName } from '@/components/pixel'
 import { ArrowLink, Chip, CornerDots, PixelButton, Reveal, Section, Words } from '@/components/ui'
 import { LINKS } from '@/lib/links'
-import { FREE_MINUTES, FREE_RULE, formatHours, formatNaira, PLANS } from '@/lib/plans'
+import { FREE_MINUTES, formatHours, formatNaira, PLANS } from '@/lib/plans'
 
 /* ------------------------------------------------------------------ */
 /* 11 — Community                                                       */
@@ -205,7 +205,7 @@ export function Pricing() {
             </Reveal>
             <Words className="display mt-6 text-[38px] md:text-[48px] xl:text-[56px]">Pay only for the time you use.</Words>
             <Reveal as="p" delay={150} className="mt-5 max-w-[600px] text-[16px] leading-[1.5] text-muted">
-              Every new account gets {FREE_MINUTES} free minutes ({FREE_RULE}). When you need more, buy a pack. No
+              The first account on each phone gets {FREE_MINUTES} free minutes. When you need more, buy a pack. No
               subscription, and nothing is charged automatically.
             </Reveal>
           </div>

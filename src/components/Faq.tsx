@@ -4,7 +4,7 @@ import { useInView, useReducedMotion } from '@/lib/motion'
 import { Pixel } from '@/components/pixel'
 import { ArrowLink, Chip, PixelButton, Reveal, Scramble, Section, Words } from '@/components/ui'
 import { LINKS, externalProps } from '@/lib/links'
-import { FREE_MINUTES, FREE_RULE } from '@/lib/plans'
+import { FREE_MINUTES } from '@/lib/plans'
 
 /* ------------------------------------------------------------------ */
 /* 13 — FAQ                                                            */
@@ -29,7 +29,7 @@ const faqs = [
   },
   {
     q: 'Is Loki available to everyone?',
-    a: `Yes. Anyone with an Android phone can download Loki. New accounts get ${FREE_MINUTES} free minutes, ${FREE_RULE}.`,
+    a: `Yes. Anyone with an Android phone can download Loki. The first account on each phone gets ${FREE_MINUTES} free minutes.`,
   },
   {
     q: 'Can I use Loki to sound like a specific person?',
@@ -244,6 +244,7 @@ const footerGroups = [
       { label: 'Telegram channel', href: LINKS.channel },
       { label: 'Download', href: LINKS.download },
       { label: 'Contact', href: LINKS.support },
+      { label: 'Partners', href: '/partners' },
     ],
   },
 ]

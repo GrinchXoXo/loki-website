@@ -16,6 +16,12 @@ const supportEmail = clean(env.VITE_LOKI_SUPPORT_EMAIL)
 const setupGuide = clean(env.VITE_LOKI_SETUP_GUIDE_URL)
 const privacy = clean(env.VITE_LOKI_PRIVACY_URL)
 const terms = clean(env.VITE_LOKI_TERMS_URL)
+const partnerForm = clean(env.VITE_LOKI_PARTNER_FORM_URL)
+const lokiApiUrl = clean(env.VITE_LOKI_API_URL)
+const firebaseApiKey = clean(env.VITE_FIREBASE_API_KEY)
+const firebaseAuthDomain = clean(env.VITE_FIREBASE_AUTH_DOMAIN)
+const firebaseProjectId = clean(env.VITE_FIREBASE_PROJECT_ID)
+const firebaseAppId = clean(env.VITE_FIREBASE_APP_ID)
 
 // Section links start with "/" so they also work from the Privacy, Terms and
 // Setup pages (from the home page they simply scroll).
@@ -34,7 +40,18 @@ export const LINKS = {
   setupGuide: setupGuide || '/setup',
   privacy: privacy || '/privacy',
   terms: terms || '/terms',
+  partnerForm: partnerForm || support || '/partners#apply',
 }
+
+/** Settings used by the partner dashboard. */
+export const LOKI_API_URL = lokiApiUrl || 'https://api.3-252-253-247.sslip.io'
+export const PARTNER_FIREBASE_CONFIG = {
+  apiKey: firebaseApiKey,
+  authDomain: firebaseAuthDomain,
+  projectId: firebaseProjectId,
+  appId: firebaseAppId,
+}
+export const PARTNER_SIGN_IN_AVAILABLE = Object.values(PARTNER_FIREBASE_CONFIG).every(Boolean)
 
 /** Shown on the support and legal pages. */
 export const SUPPORT_EMAIL = supportEmail

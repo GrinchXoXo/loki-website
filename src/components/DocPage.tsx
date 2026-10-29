@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { Pixel } from '@/components/pixel'
 import { Chip, Reveal, Section, Words } from '@/components/ui'
 import type { Doc, DocBlock } from '@/lib/docs'
@@ -42,7 +42,7 @@ function Block({ block }: { block: DocBlock }) {
   )
 }
 
-export function DocPage({ doc }: { doc: Doc }) {
+export function DocPage({ doc, actions }: { doc: Doc; actions?: ReactNode }) {
   return (
     <Section n="02" id="top" className="border-t-0">
       <div className="grid gap-10 pt-10 pb-16 md:pt-20 md:pb-20 lg:grid-cols-[400px_1fr] lg:gap-0 xl:pt-[128px] xl:pb-[128px]">
@@ -57,6 +57,7 @@ export function DocPage({ doc }: { doc: Doc }) {
             <Reveal as="p" delay={150} className="mt-6 max-w-[340px] text-[16px] leading-[1.5] text-muted">
               {doc.intro}
             </Reveal>
+            {actions && <Reveal delay={220} className="mt-8 flex flex-col items-start gap-5">{actions}</Reveal>}
             {doc.updated && (
               <Reveal delay={200} className="label mt-6 text-[11px] text-muted">
                 Updated {doc.updated}
